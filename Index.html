@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#dedbd4">
+  <title>ROID CEL</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #dedbd4;
+      --surface: #e9e6df;
+      --surface-dark: #d2cfc7;
+      --text: #292925;
+      --muted: #77756e;
+      --line: #c7c3ba;
+      --accent: #77766d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* INTRO */
+
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity .5s ease, visibility .5s ease;
+    }
+
+    #intro.closed {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-content {
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: clamp(42px, 12vw, 66px);
+      font-weight: 500;
+      letter-spacing: 9px;
+      margin-bottom: 10px;
+    }
+
+    .intro-subtitle {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--muted);
+      margin-bottom: 38px;
+    }
+
+    .intro-line {
+      height: 1px;
+      background: var(--line);
+      margin: 24px 0;
+    }
+
+    .disclaimer {
+      text-align: left;
+      background: rgba(255,255,255,.2);
+      border: 1px solid var(--line);
+      padding: 22px;
+      border-radius: 5px;
+      margin-bottom: 24px;
+    }
+
+    .disclaimer h3 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .disclaimer p {
+      color: #68665f;
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .age-note {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .enter-btn {
+      width: 100%;
+      border: 1px solid var(--text);
+      background: var(--text);
+      color: var(--bg);
+      padding: 17px;
+      border-radius: 3px;
+      font-size: 11px;
+      letter-spacing: 3px;
+      transition: .25s;
+    }
+
+    .enter-btn:hover {
+      background: transparent;
+      color: var(--text);
+    }
+
+    /* HEADER */
+
+    header {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 24px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-logo {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 5px;
+    }
+
+    .header-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    /* MAIN */
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 45px 24px;
+      min-height: 65vh;
+    }
+
+    .page {
+      animation: appear .35s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-bottom: 18px;
+    }
+
+    .page-title {
+      font-size: clamp(30px, 7vw, 48px);
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    .description {
+      max-width: 550px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .hero {
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 35px 0;
+    }
+
+    .hero .page-title {
+      font-size: clamp(42px, 10vw, 76px);
+      letter-spacing: 8px;
+    }
+
+    .hero-mark {
+      width: 65px;
+      height: 1px;
+      background: var(--text);
+      margin: 28px 0;
+    }
+
+    .section-heading {
+      font-size: 12px;
+      letter-spacing: 3px;
+      font-weight: 500;
+      margin: 35px 0 18px;
+    }
+
+    /* CARDS */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 25px;
+      min-height: 145px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: .25s;
+    }
+
+    .card:hover {
+      background: var(--surface-dark);
+      transform: translateY(-3px);
+    }
+
+    .card-number {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .card-arrow {
+      color: var(--muted);
+      font-size: 18px;
+      text-align: right;
+    }
+
+    /* CERTIFICATES */
+
+    .certificate-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .certificate {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 19px;
+    }
+
+    .certificate-name {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .certificate-type {
+      font-size: 9px;
+      color: var(--muted);
+      margin-top: 7px;
+    }
+
+    .certificate-link {
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      padding: 10px 13px;
+      font-size: 9px;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      border: 1px dashed var(--line);
+      padding: 35px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 2;
+      margin-top: 25px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      max-width: 1100px;
+      margin: auto;
+      border-top: 1px solid var(--line);
+      padding: 25px 24px;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    /* BOTTOM NAV */
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 50;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(222,219,212,.96);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: center;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 600px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 9px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 9px;
+      letter-spacing: 1px;
+      transition: .2s;
+    }
+
+    .nav-icon {
+      font-size: 19px;
+      line-height: 1;
+    }
+
+    .nav-btn.active {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 23px 20px 18px;
+      }
+
+      main {
+        padding: 35px 20px;
+      }
+
+      .hero {
+        min-height: 300px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 125px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- START SCREEN -->
+
+  <section id="intro">
+    <div class="intro-content">
+      <div class="logo">ROID CEL</div>
+      <div class="intro-subtitle">INFORMATION SPACE</div>
+
+      <div class="intro-line"></div>
+
+      <div class="disclaimer">
+        <h3>DISCLAIMER / ДИСКЛЕЙМЕР</h3>
+        <p>
+          Данный ресурс предназначен для ознакомительных и образовательных
+          целей. Информация на сайте не является медицинской рекомендацией,
+          назначением или руководством к применению веществ.
+          Не используйте представленные материалы для самолечения.
+          Соблюдайте действующее законодательство.
+        </p>
+      </div>
+
+      <div class="age-note">18+ · PLEASE READ BEFORE ENTERING</div>
+
+      <button class="enter-btn" onclick="enterSite()">
+        ВОЙТИ НА САЙТ
+      </button>
+    </div>
+  </section>
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="header-logo">ROID CEL</div>
+    <div class="header-label">INFORMATION SPACE</div>
+  </header>
+
+  <!-- CONTENT -->
+
+  <main>
+
+    <!-- HOME -->
+
+    <section id="home" class="page">
+      <div class="hero">
+        <div class="eyebrow">WELCOME TO ROID CEL</div>
+        <h1 class="page-title">ROID CEL</h1>
+        <div class="hero-mark"></div>
+        <p class="description">
+          Минималистичное информационное пространство.
+          Материалы, документы и справочная информация
+          собраны в одном месте.
+        </p>
+      </div>
+
+      <div class="section-heading">РАЗДЕЛЫ</div>
+
+      <div class="cards">
+        <div class="card" onclick="showPage('products')">
+          <div class="card-number">01 / CATALOG</div>
+          <div class="card-title">Товары</div>
+          <div class="card-arrow">↗</div>
+        </div>
+
+        <div class="card" onclick="showPage('certificates')">
+          <div class="card-number">02 / DOCUMENTS</div>
+          <div class="card-title">Сертификаты</div>
+          <div class="card-arrow">↗</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+
+    <section id="products" class="page hidden">
+      <div class="eyebrow">01 / CATALOG</div>
+      <h1 class="page-title">Товары</h1>
+      <p class="description">
+        Информационный раздел. Здесь размещаются справочные
+        материалы о категориях и свойствах веществ.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-number">CATEGORY 01</div>
+          <div class="card-title">Сырьё</div>
+          <div class="card-arrow">—</div>
+        </div>
+      </div>
+
+      <div class="empty-state">
+        Информационные материалы пока не добавлены.
+      </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+
+    <section id="certificates" class="page hidden">
+      <div class="eyebrow">02 / DOCUMENTATION</div>
+      <h1 class="page-title">Сертификаты</h1>
+      <p class="description">
+        Раздел для просмотра официальных документов
+        и справочных материалов.
+      </p>
+
+      <div class="certificate-list" id="certificateList"></div>
+
+      <div class="empty-state" id="certificateEmpty">
+        Документы пока не добавлены.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    ROID CEL · INFORMATION SPACE
+  </footer>
+
+  <!-- BOTTOM NAVIGATION -->
+
+  <nav class="bottom-nav">
+    <div class="nav-inner">
+
+      <button class="nav-btn active" data-page="home"
+        onclick="showPage('home')">
+        <span class="nav-icon">⌂</span>
+        <span>ГЛАВНАЯ</span>
+      </button>
+
+      <button class="nav-btn" data-page="products"
+        onclick="showPage('products')">
+        <span class="nav-icon">▤</span>
+        <span>ТОВАРЫ</span>
+      </button>
+
+      <button class="nav-btn" data-page="certificates"
+        onclick="showPage('certificates')">
+        <span class="nav-icon">▧</span>
+        <span>СЕРТИФИКАТЫ</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <script>
+    // Открытие сайта после стартового экрана
+
+    function enterSite() {
+      document.getElementById('intro').classList.add('closed');
+      sessionStorage.setItem('roidcel_entered', 'yes');
+    }
+
+    // При повторном открытии вкладки стартовый экран не показывается снова
+
+    if (sessionStorage.getItem('roidcel_entered') === 'yes') {
+      document.getElementById('intro').classList.add('closed');
+    }
+
+    // Переключение разделов
+
+    function showPage(pageName) {
+      const pages = ['home', 'products', 'certificates'];
+
+      pages.forEach(function(page) {
+        document.getElementById(page).classList.add('hidden');
+      });
+
+      document.getElementById(pageName).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(function(button) {
+        button.classList.toggle(
+          'active',
+          button.dataset.page === pageName
+        );
+      });
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Сертификаты.
+    // Добавляйте документы в папку certificates и указывайте их здесь.
+    // Пример:
+    // { name: 'Документ 01', file: 'certificates/document-01.pdf' }
+
+    const certificates = [];
+
+    function renderCertificates() {
+      const list = document.getElementById('certificateList');
+      const empty = document.getElementById('certificateEmpty');
+
+      list.innerHTML = '';
+
+      if (certificates.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+
+      certificates.forEach(function(cert) {
+        const item = document.createElement('div');
+        item.className = 'certificate';
+
+        const info = document.createElement('div');
+
+        const name = document.createElement('div');
+        name.className = 'certificate-name';
+        name.textContent = cert.name;
+
+        const type = document.createElement('div');
+        type.className = 'certificate-type';
+        type.textContent = 'PDF DOCUMENT';
+
+        info.appendChild(name);
+        info.appendChild(type);
+
+        const link = document.createElement('a');
+        link.className = 'certificate-link';
+        link.href = cert.file;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = 'ОТКРЫТЬ';
+
+        item.appendChild(info);
+        item.appendChild(link);
+        list.appendChild(item);
+      });
+    }
+
+    renderCertificates();
+  </script>
+
+</body>
+</html>
